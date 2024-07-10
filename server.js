@@ -1,11 +1,14 @@
 import express from 'express';
 import { createSubaccount, initializePayment, verifyPayment } from './services/paystackService.js';
+import router from './index.js'
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const app = express();
+
 app.use(express.json()); // To parse JSON bodies
+app.use('/paystack', router)
 
 // Endpoint to create a subaccount for an event host
 app.post('/api/paystack/subaccount', async (req, res) => {
@@ -55,3 +58,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+app.get("/", (req,res) => {
+    res.send('API IS RUNNING')
+})
